@@ -1,5 +1,27 @@
 import React, { useState, Fragment } from 'react';
 
+function Cita({ cita }) {
+	return (
+		<div className="cita">
+			<p>
+				Mascota: <span>{cita.mascota}</span>
+			</p>
+			<p>
+				Dueño/a: <span>{cita.propietario}</span>
+			</p>
+			<p>
+				Fecha: <span>{cita.fecha}</span>
+			</p>
+			<p>
+				Hora: <span>{cita.hora}</span>
+			</p>
+			<p>
+				Sintomas: <span>{cita.sintomas}</span>
+			</p>
+		</div>
+	);
+}
+
 function Formulario({ crearCita }) {
 	const [ cita, actualizarCita ] = useState({
 		mascota: '',
@@ -21,7 +43,7 @@ function Formulario({ crearCita }) {
 
 		console.log(cita);
 		// pasar la cita hacia el componente principal
-		crearCita();
+		crearCita(cita);
 
 		// Reiniciar el state (reinicia el form)
 	};
@@ -83,10 +105,12 @@ function App() {
 			<h1>Administrador de Pacientes</h1>
 			<div className="container">
 				<div className="row">
-					<div className="one-half colum">
+					<div className="one-half column">
 						<Formulario crearCita={crearCita} />
 					</div>
-					<div className="one-half colum" />
+					<div className="one-half column">
+						{citas.map((cita, index) => <Cita key={index} index={index} cita={cita} />)}
+					</div>
 				</div>
 			</div>
 		</Fragment>
