@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 
-function Cita({ cita }) {
+function Cita({ cita, index, eliminarCita }) {
 	return (
 		<div className="cita">
 			<p>
@@ -18,6 +18,9 @@ function Cita({ cita }) {
 			<p>
 				Sintomas: <span>{cita.sintomas}</span>
 			</p>
+			<button onClick={() => eliminarCita(index)} type="button" className="button eliminar u-full-width">
+				Eliminar X
+			</button>
 		</div>
 	);
 }
@@ -117,6 +120,13 @@ function App() {
 		// Almacenamos en el state
 		guardarCita(nuevasCitas);
 	};
+
+	// Elimina las citas del state
+	const eliminarCita = (index) => {
+		const nuevasCitas = [ ...citas ];
+		nuevasCitas.splice(index, 1);
+		guardarCita(nuevasCitas);
+	};
 	return (
 		<Fragment>
 			<h1>Administrador de Pacientes</h1>
@@ -126,7 +136,9 @@ function App() {
 						<Formulario crearCita={crearCita} />
 					</div>
 					<div className="one-half column">
-						{citas.map((cita, index) => <Cita key={index} index={index} cita={cita} />)}
+						{citas.map((cita, index) => (
+							<Cita key={index} index={index} cita={cita} eliminarCita={eliminarCita} />
+						))}
 					</div>
 				</div>
 			</div>
