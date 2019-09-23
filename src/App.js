@@ -23,13 +23,20 @@ function Cita({ cita }) {
 }
 
 function Formulario({ crearCita }) {
-	const [ cita, actualizarCita ] = useState({
+	const stateInicial = {
 		mascota: '',
 		propietario: '',
 		fecha: '',
 		hora: '',
 		sintomas: ''
-	});
+	};
+
+	// cita = state actual
+	// actualizarCita = fn para cambiar el state
+
+	const [ cita, actualizarCita ] = useState(stateInicial);
+
+	// actualiza el state
 
 	const actualizarState = (e) => {
 		actualizarCita({
@@ -38,6 +45,7 @@ function Formulario({ crearCita }) {
 		});
 	};
 
+	// pasamos la cita al componente principal
 	const enviarCita = (e) => {
 		e.preventDefault();
 
@@ -46,6 +54,7 @@ function Formulario({ crearCita }) {
 		crearCita(cita);
 
 		// Reiniciar el state (reinicia el form)
+		actualizarCita(stateInicial);
 	};
 	return (
 		<Fragment>
@@ -58,6 +67,7 @@ function Formulario({ crearCita }) {
 					className="u-full-width"
 					placeholder="Nombre Mascota"
 					onChange={actualizarState}
+					value={cita.mascota}
 				/>
 
 				<label>Nombre Dueño</label>
@@ -67,16 +77,23 @@ function Formulario({ crearCita }) {
 					className="u-full-width"
 					placeholder="Nombre Dueño de la Mascota"
 					onChange={actualizarState}
+					value={cita.propietario}
 				/>
 
 				<label>Fecha</label>
-				<input type="date" className="u-full-width" name="fecha" onChange={actualizarState} />
+				<input
+					type="date"
+					className="u-full-width"
+					name="fecha"
+					onChange={actualizarState}
+					value={cita.fecha}
+				/>
 
 				<label>Hora</label>
-				<input type="time" className="u-full-width" name="hora" onChange={actualizarState} />
+				<input type="time" className="u-full-width" name="hora" onChange={actualizarState} value={cita.hora} />
 
 				<label>Sintomas</label>
-				<textarea className="u-full-width" name="sintomas" onChange={actualizarState} />
+				<textarea className="u-full-width" name="sintomas" onChange={actualizarState} value={cita.sintomas} />
 
 				<button type="submit" className="button-primary u-full-width">
 					Agregar
